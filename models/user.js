@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const uuid = require("uuid");
 
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
