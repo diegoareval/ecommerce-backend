@@ -5,6 +5,10 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 require("dotenv").config()
 
+// api doc
+const swaggerUi = require("swagger-ui-express"),
+swaggerDocument = require("./swagger.json");
+
 // import routes 
 const authRoutes = require("./routes/auth")
 const userRoutes = require('./routes/user')
@@ -22,6 +26,7 @@ mongoose.connect(process.env.DATABASE, {
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(cookieParser())
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // routes middleware
 app.use("/api",authRoutes)

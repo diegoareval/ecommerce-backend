@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "swagger-autogen": "node swagger.js"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,10 @@
     "mongoose": "^5.10.10",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
-    "uuid": "^8.3.1"
+    "swagger-autogen": "^1.2.5",
+    "swagger-jsdoc": "^4.3.1",
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.3.1",
+    "yamljs": "^0.3.0"
   }
 }
