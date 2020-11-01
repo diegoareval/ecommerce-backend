@@ -17,6 +17,21 @@ Product.findById(id).exec((error, product) =>{
 })
 }
 
+exports.remove = (req, res) => {
+   let product = req.product
+   product.remove((error, deletedProduct) =>{
+     if(error){
+       res.status(400).json({
+         error: errorHandler(error)
+       })
+     }
+     res.json({
+       deletedProduct,
+       message: "Product was removed"
+     })
+   })
+}
+
 exports.read = (req, res) =>{
   req.product.photo = undefined
   return  res.json(req.product)
