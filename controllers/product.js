@@ -14,8 +14,21 @@ exports.create = (req, res) =>{
                 error: "Image could not uploaded"
               })
             }
+            
+          const {name, description, price, category, quantity, shipping} = fields
+        if(!name || !description || !price  || !category || !quantity || !shipping){
+              res.status(400).json({
+              error: "all the fields are required"
+            })
+        }
             let product = new Product(fields)
        if(files.photo){
+        
+         if(files.photo.size>10000000) {
+           res.status(400).json({
+                error: "Image is too big"
+              })
+         }
          product.photo.data = fs.readFileSync(files.photo.path)
          product.photo.contentType = files.photo.type
        }
