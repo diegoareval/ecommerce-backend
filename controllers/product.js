@@ -124,9 +124,21 @@ exports.list = (req, res) =>{
   Product.find().select("-photo").populate('category').sort([[sortBy, order]]).limit(limit).exec((err, products) =>{
     if(err){
             res.status(400).json({
-                error: 'Product not found'
+                error: 'Products not found'
               })
           }
-          res.send(products)
+          res.json(products)
+  })
+}
+
+exports.listRelated = (req, res) =>{
+  let limit = req.query.limit ? parseInt(req.query.limit): 6
+  Product.find({_id: {$ne: req.product}, category: req.product.category}).limit(limit).populate('category', '_id name').exec((err, products) =>{
+     if(err){
+            res.status(400).json({
+                error: 'Products not found'
+              })
+          }
+          res.json(products)
   })
 }
