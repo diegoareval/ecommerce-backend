@@ -3,7 +3,8 @@ const formidable = require("formidable");
 const _ = require("lodash")
 const fs = require("fs")
 const Product = require("../models/product");
-const {errorHandler} = require("../helpers/dbErrorHandler")
+const {errorHandler} = require("../helpers/dbErrorHandler");
+const { parseInt } = require("lodash");
 
 exports.productById = (req, res, next, id) =>{
 Product.findById(id).exec((error, product) =>{
@@ -114,10 +115,12 @@ exports.create = (req, res) =>{
     })
 }
 
+// sold = http://localhost:8000/api/products?sortBy=sold&order=desc&limit=4
+// arival = http://localhost:8000/api/products?sortBy=createdAt&order=desc&limit=4
 exports.list = (req, res) =>{
   let order = req.query.order ? req.query.order: 'asc'
   let sortBy = req.query.sortBy ? req.query.sortBy: '_id'
-  let limit = req.query.limit ? req.query.limit: 6
+  let limit = req.query.limit ? parseInt(req.query.limit): 6
   Product.find().select("-photo").populate('category').sort([[sortBy, order]]).limit(limit).exec((err, products) =>{
     if(err){
             res.status(400).json({
