@@ -224,3 +224,22 @@ exports.listSearch = (req, res) =>{
     }).select('-photo')
   }
 }
+
+exports.decreaseQuantity = (req, res, next) =>{
+   let operation = req.body.order.products.map((item) =>{
+     return {
+       updateOne: {
+         filter: {_id: item._id},
+         update: {$inc: {quantity: -item.count, sold: +item.count}}
+       }
+     }
+   });
+   Product.bulkWrite(operation, {}, (error, products) =>{
+            if(error || !products){
+            res.status(400).json({
+                error: "Could not update products"
+              })
+          }
+          next()
+   })
+};
