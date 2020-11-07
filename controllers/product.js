@@ -203,3 +203,24 @@ if(req.product.photo.data){
 }
 next()
 }
+
+exports.listSearch = (req, res) =>{
+  // create query
+  const query = {}
+  // assing query name
+  if(req, query.search) {
+    query.name = {$regex: req.query.search, $options: "i"}
+    if(req.query.category && req.query.category!='All'){
+      query.category =  req.query.category
+    }
+    // search
+    Product.find(query, (error, products) =>{
+      if(error || !products){
+            res.status(400).json({
+                error: errorHandler(error)
+              })
+          }
+         res.json(products)
+    }).select('-photo')
+  }
+}
