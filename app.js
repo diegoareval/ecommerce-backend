@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const morgan = require("morgan")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const cors = require("cors")
 require("dotenv").config()
 
 // api doc
@@ -25,6 +26,7 @@ mongoose.connect(process.env.DATABASE, {
 
 
 // midlewares 
+app.use(cors())
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(cookieParser())
