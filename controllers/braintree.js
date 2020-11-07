@@ -3,7 +3,7 @@ const User = require("../models/user")
 require("dotenv").config()
 const braintree = require("braintree")
 
-const gateway = braintree.connect({
+const gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
   merchantId: process.env.BRAINTREE_MERCHANT_ID,
   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
